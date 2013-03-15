@@ -2,7 +2,7 @@ from django.conf import settings
 
 try:
     from PIL import Image
-    dir(Image) # Placate PyFlakes
+    dir(Image)  # Placate PyFlakes
 except ImportError:
     import Image
 
@@ -24,3 +24,4 @@ AVATAR_ALLOWED_FILE_EXTS = getattr(settings, 'AVATAR_ALLOWED_FILE_EXTS', None)
 AVATAR_CACHE_TIMEOUT = getattr(settings, 'AVATAR_CACHE_TIMEOUT', 60 * 60)
 AVATAR_STORAGE = getattr(settings, 'AVATAR_STORAGE', settings.DEFAULT_FILE_STORAGE)
 AVATAR_CLEANUP_DELETED = getattr(settings, 'AVATAR_CLEANUP_DELETED', False)
+AVATAR_USE_PK_IN_PATH = getattr(settings, 'AVATAR_USE_PK_IN_PATH', False)

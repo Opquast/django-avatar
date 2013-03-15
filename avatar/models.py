@@ -32,18 +32,21 @@ from avatar.settings import (AVATAR_STORAGE_DIR, AVATAR_RESIZE_METHOD,
                              AVATAR_HASH_USERDIRNAMES, AVATAR_HASH_FILENAMES,
                              AVATAR_THUMB_QUALITY, AUTO_GENERATE_AVATAR_SIZES,
                              AVATAR_DEFAULT_SIZE, AVATAR_STORAGE,
-                             AVATAR_CLEANUP_DELETED)
+                             AVATAR_CLEANUP_DELETED, AVATAR_USE_PK_IN_PATH)
 
 avatar_storage = get_storage_class(AVATAR_STORAGE)()
 
 
 def avatar_file_path(instance=None, filename=None, size=None, ext=None):
     tmppath = [AVATAR_STORAGE_DIR]
+    dir = instance.user.username
+    if AVATAR_USE_PK_IN_PATH:
+        dir = instance.user.pk
     if AVATAR_HASH_USERDIRNAMES:
-        tmp = md5_constructor(instance.user.username).hexdigest()
-        tmppath.extend([tmp[0], tmp[1], instance.user.username])
+        tmp = md5_constructor(dir).hexdigest()
+        tmppath.extend([tmp[0], tmp[1], dir])
     else:
-        tmppath.append(instance.user.username)
+        tmppath.append(dir)
     if not filename:
         # Filename already stored in database
         filename = instance.avatar.name
