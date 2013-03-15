@@ -41,7 +41,7 @@ def avatar_file_path(instance=None, filename=None, size=None, ext=None):
     tmppath = [AVATAR_STORAGE_DIR]
     dir = instance.user.username
     if AVATAR_USE_PK_IN_PATH:
-        dir = instance.user.pk
+        dir = str(instance.user.pk)
     if AVATAR_HASH_USERDIRNAMES:
         tmp = md5_constructor(dir).hexdigest()
         tmppath.extend([tmp[0], tmp[1], dir])
